@@ -1,0 +1,208 @@
+<openapoc>
+    <buildings>
+        <building name="Uhuru Tower" owner="Technocrats" id="0" type="Corporate HQ">
+            <rect X0="6" Y0="7" X1="10" Y1="13"/>
+        </building>
+        <building name="The Senate" owner="Government" id="1" type="Senate">
+            <rect X0="12" Y0="13" X1="21" Y1="19"/>
+        </building>
+        <building name="The Karpov Building" owner="Cyberweb" id="2" type="Corporate HQ">
+            <rect X0="6" Y0="19" X1="11" Y1="24"/>
+        </building>
+        <building name="George Orwell Block" owner="S.E.L.F." id="3" type="Slums">
+            <rect X0="25" Y0="3" X1="30" Y1="7"/>
+        </building>
+        <building name="Thomas More Tower" owner="S.E.L.F." id="4" type="Slums">
+            <rect X0="25" Y0="11" X1="32" Y1="18"/>
+        </building>
+        <building name="Dickens Estate" owner="Government" id="5" type="Slums">
+            <rect X0="36" Y0="7" X1="42" Y1="17"/>
+        </building>
+        <building name="Robot One" owner="Cyberweb" id="6" type="Robot Factory">
+            <rect X0="48" Y0="7" X1="53" Y1="11"/>
+        </building>
+        <building name="Hydrozone One" owner="Evonet" id="7" type="Water Purifier">
+            <rect X0="48" Y0="13" X1="53" Y1="16"/>
+        </building>
+        <building name="Flyer One" owner="Superdynamics" id="8" type="Flyer Factory">
+            <rect X0="47" Y0="18" X1="53" Y1="21"/>
+        </building>
+        <building name="Judgment Central" owner="Megapol" id="9" type="Police Station">
+            <rect X0="30" Y0="22" X1="35" Y1="25"/>
+        </building>
+        <building name="Nietzsche Institute" owner="Nanotech" id="10" type="Corporate HQ">
+            <rect X0="23" Y0="23" X1="28" Y1="29"/>
+        </building>
+        <building name="Iliad Institute" owner="Lifetree" id="11" type="School">
+            <rect X0="37" Y0="20" X1="46" Y1="25"/>
+        </building>
+        <building name="Oliver Twist Block" owner="Osiron" id="12" type="Slums">
+            <rect X0="27" Y0="33" X1="38" Y1="37"/>
+        </building>
+        <building name="Campesino Apartments" owner="Diablo" id="13" type="Slums">
+            <rect X0="25" Y0="92" X1="35" Y1="99"/>
+        </building>
+        <building name="Eden Mansions" owner="Government" id="14" type="Luxury Apartments">
+            <rect X0="30" Y0="76" X1="38" Y1="83"/>
+        </building>
+        <building name="Acropolis Apartments" owner="Transtellar" id="15" type="Apartments">
+            <rect X0="23" Y0="82" X1="29" Y1="89"/>
+        </building>
+        <building name="Atlantis Apartments" owner="Sanctuary Clinic" id="16" type="Apartments">
+            <rect X0="23" Y0="73" X1="27" Y1="80"/>
+        </building>
+        <building name="Grey Visitor Towers" owner="Mutant Alliance" id="17" type="Slums">
+            <rect X0="21" Y0="64" X1="28" Y1="70"/>
+        </building>
+        <building name="Babylon Apartments" owner="Government" id="18" type="Apartments">
+            <rect X0="34" Y0="57" X1="39" Y1="62"/>
+        </building>
+        <building name="Bosch Institute" owner="Lifetree" id="19" type="School">
+            <rect X0="33" Y0="64" X1="40" Y1="71"/>
+        </building>
+        <building name="Phoenix Sanatorium" owner="Sanctuary Clinic" id="20" type="Hospital">
+            <rect X0="43" Y0="58" X1="47" Y1="62"/>
+        </building>
+        <building name="Enforcer Academy" owner="Megapol" id="21" type="Police Station">
+            <rect X0="42" Y0="67" X1="48" Y1="71"/>
+        </building>
+        <building name="Scrooge Mansions" owner="Diablo" id="22" type="Slums">
+            <rect X0="42" Y0="86" X1="48" Y1="89"/>
+        </building>
+        <building name="Foucault Tower" owner="Energen" id="23" type="Corporate HQ">
+            <rect X0="53" Y0="82" X1="61" Y1="88"/>
+        </building>
+        <building name="Edifice Tower" owner="Synthemesh" id="24" type="Corporate HQ">
+            <rect X0="55" Y0="70" X1="61" Y1="77"/>
+        </building>
+        <building name="Utopia Mansions" owner="Lifetree" id="25" type="Luxury Apartments">
+            <rect X0="65" Y0="80" X1="76" Y1="89"/>
+        </building>
+        <building name="Nirvana Mansions" owner="Sanctuary Clinic" id="26" type="Luxury Apartments">
+            <rect X0="67" Y0="73" X1="73" Y1="77"/>
+        </building>
+        <building name="Borstal Block" owner="Psyke" id="27" type="Slums">
+            <rect X0="81" Y0="69" X1="84" Y1="73"/>
+        </building>
+        <building name="Heavenly Towers" owner="Government" id="28" type="Slums">
+            <rect X0="68" Y0="64" X1="76" Y1="69"/>
+        </building>
+        <building name="Temple of the Apocalypse" owner="Cult of Sirius" id="29" type="Temple of Sirius">
+            <rect X0="63" Y0="67" X1="65" Y1="70"/>
+        </building>
+        <building name="Aldous Huxley Emporium" owner="Nutrivend" id="30" type="Shopping Mall">
+            <rect X0="52" Y0="60" X1="61" Y1="68"/>
+        </building>
+        <building name="Civic Project" owner="Osiron" id="31" type="Slums">
+            <rect X0="29" Y0="48" X1="38" Y1="53"/>
+        </building>
+        <building name="Warehouse One" owner="Osiron" id="32" type="Warehouse">
+            <rect X0="34" Y0="44" X1="39" Y1="47"/>
+        </building>
+        <building name="Warehouse Two" owner="Marsec" id="33" type="Warehouse">
+            <rect X0="34" Y0="39" X1="39" Y1="43"/>
+        </building>
+        <building name="Warehouse Three" owner="Government" id="34" type="Warehouse">
+            <rect X0="63" Y0="56" X1="65" Y1="60"/>
+        </building>
+        <building name="Garden of Delights" owner="Sanctuary Clinic" id="35" type="Procreation Park">
+            <rect X0="67" Y0="56" X1="71" Y1="60"/>
+        </building>
+        <building name="Cultivator One" owner="Nutrivend" id="36" type="Hydro-Farm">
+            <rect X0="73" Y0="56" X1="81" Y1="60"/>
+        </building>
+        <building name="Megatribe Warriors" owner="Gravball League" id="37" type="Astrodome">
+            <rect X0="63" Y0="49" X1="70" Y1="54"/>
+        </building>
+        <building name="Quadrax Tower" owner="Nutrivend" id="38" type="Offices">
+            <rect X0="63" Y0="40" X1="70" Y1="47"/>
+        </building>
+        <building name="Law Control Station" owner="Megapol" id="39" type="Police Station">
+            <rect X0="72" Y0="39" X1="81" Y1="49"/>
+        </building>
+        <building name="Megavision One" owner="Sensovision" id="40" type="Sensodrome">
+            <rect X0="72" Y0="51" X1="81" Y1="54"/>
+        </building>
+        <building name="Rescue One" owner="Megapol" id="41" type="Rescue Station">
+            <rect X0="56" Y0="37" X1="61" Y1="38"/>
+        </building>
+        <building name="Megavision Two" owner="Sensovision" id="42" type="Sensodrome">
+            <rect X0="49" Y0="33" X1="54" Y1="38"/>
+        </building>
+        <building name="Gygax Memorial Building" owner="Solmine" id="43" type="Offices">
+            <rect X0="42" Y0="33" X1="48" Y1="40"/>
+        </building>
+        <building name="Transtellar Spacelines" owner="Transtellar" id="44" type="Space Port">
+            <rect X0="43" Y0="42" X1="58" Y1="55"/>
+        </building>
+        <building name="Meteor Kings" owner="Gravball League" id="45" type="Astrodome">
+            <rect X0="41" Y0="27" X1="46" Y1="31"/>
+        </building>
+        <building name="Parallax Tower" owner="Government" id="46" type="Offices">
+            <rect X0="48" Y0="23" X1="55" Y1="31"/>
+        </building>
+        <building name="Temple of the Millenium" owner="Cult of Sirius" id="47" type="Temple of Sirius">
+            <rect X0="57" Y0="23" X1="61" Y1="26"/>
+        </building>
+        <building name="Appliances One" owner="Nanotech" id="48" type="Appliances Factory">
+            <rect X0="55" Y0="18" X1="61" Y1="21"/>
+        </building>
+        <building name="Arms One" owner="Marsec" id="49" type="Arms Factory">
+            <rect X0="55" Y0="13" X1="61" Y1="16"/>
+        </building>
+        <building name="Cityclean One" owner="Evonet" id="50" type="Sewage Works">
+            <rect X0="55" Y0="6" X1="66" Y1="11"/>
+        </building>
+        <building name="Warehouse Four" owner="Government" id="51" type="Warehouse">
+            <rect X0="63" Y0="13" X1="66" Y1="18"/>
+        </building>
+        <building name="Recyclotorium One" owner="Evonet" id="52" type="Recyclotorium">
+            <rect X0="68" Y0="7" X1="70" Y1="12"/>
+        </building>
+        <building name="Construction One" owner="Synthemesh" id="53" type="Construction Factory">
+            <rect X0="68" Y0="13" X1="70" Y1="17"/>
+        </building>
+        <building name="Warehouse Five" owner="Solmine" id="54" type="Warehouse">
+            <rect X0="68" Y0="19" X1="70" Y1="24"/>
+        </building>
+        <building name="Warehouse Six" owner="Solmine" id="55" type="Warehouse">
+            <rect X0="72" Y0="19" X1="74" Y1="24"/>
+        </building>
+        <building name="Flyer Two" owner="Megapol" id="56" type="Flyer Factory">
+            <rect X0="72" Y0="10" X1="77" Y1="17"/>
+        </building>
+        <building name="Energen Building" owner="Energen" id="57" type="Power Station">
+            <rect X0="79" Y0="10" X1="83" Y1="19"/>
+        </building>
+        <building name="Megaflyer One" owner="Marsec" id="58" type="Large Flyer Factory">
+            <rect X0="76" Y0="21" X1="80" Y1="24"/>
+        </building>
+        <building name="Appliances Two" owner="Nanotech" id="59" type="Appliances Factory">
+            <rect X0="76" Y0="33" X1="80" Y1="37"/>
+        </building>
+        <building name="Warehouse Seven" owner="Government" id="60" type="Warehouse">
+            <rect X0="82" Y0="33" X1="85" Y1="37"/>
+        </building>
+        <building name="Warehouse Eight" owner="Superdynamics" id="61" type="Warehouse">
+            <rect X0="82" Y0="27" X1="85" Y1="31"/>
+        </building>
+        <building name="Car One" owner="General Metro" id="62" type="Car Factory">
+            <rect X0="76" Y0="26" X1="80" Y1="31"/>
+        </building>
+        <building name="Arms Two" owner="Megapol" id="63" type="Arms Factory">
+            <rect X0="82" Y0="21" X1="84" Y1="25"/>
+        </building>
+        <building name="Warehouse Nine" owner="Government" id="64" type="Warehouse">
+            <rect X0="85" Y0="14" X1="89" Y1="18"/>
+        </building>
+        <building name="Megaflyer Two" owner="Superdynamics" id="65" type="Large Flyer Factory">
+            <rect X0="91" Y0="14" X1="95" Y1="19"/>
+        </building>
+        <building name="The Ozone Building" owner="Extropians" id="66" type="Corporate HQ">
+            <rect X0="42" Y0="76" X1="49" Y1="81"/>
+        </building>
+        <building name="Chronos Block" owner="Osiron" id="67" type="Slums">
+            <rect X0="27" Y0="57" X1="31" Y1="61"/>
+        </building>
+    </buildings>
+</openapoc>
