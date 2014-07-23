@@ -6,6 +6,7 @@
 #include <allegro5/allegro.h>
 
 #include "rect2d.h"
+#include "organisation.h"
 
 namespace ApocRes {
 
@@ -14,19 +15,25 @@ class Organisation;
 class Building
 {
 	private:
-		Building(Organisation &owner,
+		Building(int id,
+			Organisation &owner,
 			std::string name,
+			std::string type,
 			Rect2d<unsigned short> position);
 	public:
-		Organisation &owner;
+		int id;
+		Organisation owner;
 		std::string name;
+		std::string type;
 		Rect2d<unsigned short> position;
+		void WriteXML(tinyxml2::XMLElement *parent);
 
 
-		static Building* loadFromFile(ALLEGRO_FILE *file,
+		static Building* loadFromFile(int id,
+			ALLEGRO_FILE *file,
 			std::vector<Organisation> &organisations,
 			std::vector<std::string> &names);
-		static std::vector<std::string> getDefaultNames();
+		static const std::vector<std::string>& getDefaultNames();
 
 };
 

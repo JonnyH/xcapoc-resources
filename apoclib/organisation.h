@@ -10,7 +10,7 @@ class Organisation
 	public:
 		Organisation(std::string name);
 		std::string name;
-		static std::vector<Organisation> getDefaultOrganisations();
+		const static std::vector<Organisation>& getDefaultOrganisations();
 };
 
 }; //namespace ApocRes
