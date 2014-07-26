@@ -18,13 +18,13 @@ int main(int argc, char **argv)
 		print_usage();
 		return EXIT_FAILURE;
 	}
-	ALLEGRO_FILE *bldFile = al_fopen(argv[1], "r");
+	std::ifstream bldFile(argv[1], std::ios_base::in);
 	if (!bldFile)
 	{
 		std::cerr << "Failed to open \"" << argv[1] << "\"\n";
 		return EXIT_FAILURE;
 	}
-	ALLEGRO_FILE *tileFile = al_fopen(argv[2], "r");
+	std::ifstream tileFile(argv[2], std::ios_base::in);
 	if (!tileFile)
 	{
 		std::cerr << "Failed to open \"" << argv[2] << "\"\n";
@@ -81,9 +81,6 @@ int main(int argc, char **argv)
 	doc->SaveFile(argv[5]);
 
 	delete doc;
-
-	al_fclose(tileFile);
-	al_fclose(bldFile);
 
 	return EXIT_SUCCESS;
 }

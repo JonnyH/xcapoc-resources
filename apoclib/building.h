@@ -1,12 +1,12 @@
 #pragma once
 
-#include <vector>
-#include <string>
-#include <tinyxml2.h>
-#include <allegro5/allegro.h>
-
 #include "rect2d.h"
 #include "organisation.h"
+
+#include <vector>
+#include <string>
+#include <fstream>
+#include <tinyxml2.h>
 
 namespace ApocRes {
 
@@ -30,7 +30,7 @@ class Building
 
 
 		static Building* loadFromFile(int id,
-			ALLEGRO_FILE *file,
+			std::ifstream &file,
 			std::vector<Organisation> &organisations,
 			std::vector<std::string> &names);
 		static const std::vector<std::string>& getDefaultNames();

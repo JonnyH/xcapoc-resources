@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <tinyxml2.h>
-#include <allegro5/allegro.h>
+#include <fstream>
 
 #include "voxel_layer.h"
 
@@ -25,7 +25,7 @@ public:
 	std::vector<VoxelLayer> lofVoxels;
 
 	void WriteXML(tinyxml2::XMLElement *parent);
-	static CityMapTile* loadFromFile(ALLEGRO_FILE *file,
+	static CityMapTile* loadFromFile(std::ifstream &file,
 		int id,
 		std::vector<VoxelLayer> &lofVoxelLayers);
 

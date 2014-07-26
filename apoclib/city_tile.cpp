@@ -31,11 +31,11 @@ struct citymap_dat_file
 static_assert(sizeof(struct citymap_dat_file) == 52, "citymap_dat_file not 52 bytes");
 
 CityMapTile*
-CityMapTile::loadFromFile(ALLEGRO_FILE *file, int id, std::vector<VoxelLayer> &lofVoxelLayers)
+CityMapTile::loadFromFile(std::ifstream &file, int id, std::vector<VoxelLayer> &lofVoxelLayers)
 {
 	struct citymap_dat_file dat;
-	int ret = al_fread(file, &dat, sizeof(dat));
-	if (ret != sizeof(dat))
+	file.read((char*)&dat, sizeof(dat));
+	if (!file)
 		return nullptr;
 	CityMapTile *tile = new CityMapTile();
 	std::stringstream ss;
@@ -72,17 +72,17 @@ CityMapTile::WriteXML(tinyxml2::XMLElement *parent)
 
 	auto lofelement = parent->GetDocument()->NewElement("lof");
 	element->InsertEndChild(lofelement);
-	for (int z = 0; z < this->lofVoxels.size(); z++)
+	for (unsigned int z = 0; z < this->lofVoxels.size(); z++)
 	{
 		auto voxelPlane = parent->GetDocument()->NewElement("lof_plane");
 		lofelement->InsertEndChild(voxelPlane);
 
-		for (int y = 0; y < this->lofVoxels[z].bitmap.size(); y++)
+		for (unsigned int y = 0; y < this->lofVoxels[z].bitmap.size(); y++)
 		{
 			std::stringstream ss;
 			auto voxelRow = parent->GetDocument()->NewElement("lof_row");
 			voxelPlane->InsertEndChild(voxelRow);
-			for (int x = 0; x < this->lofVoxels[z].bitmap[y].size(); x++)
+			for (unsigned int x = 0; x < this->lofVoxels[z].bitmap[y].size(); x++)
 			{
 				ss << (this->lofVoxels[z].bitmap[y][x] ? "1" : "0");
 			}

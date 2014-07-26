@@ -1,5 +1,5 @@
-#include <allegro5/allegro.h>
 #include <iostream>
+#include <fstream>
 
 #include "voxel_layer.h"
 
@@ -16,13 +16,13 @@ static_assert(sizeof(struct lofheader) == 8, "lofheader not 8 bytes");
 std::vector<VoxelLayer>
 VoxelLayer::loadLayersFromFile(const std::string datFileName, const std::string tabFileName)
 {
-	ALLEGRO_FILE *datFile = al_fopen(datFileName.c_str(), "r");
+	std::ifstream datFile (datFileName, std::ios_base::in);
 	if (!datFile)
 	{
 		std::cerr << "Failed to open \"" << datFileName << "\"\n";
 		return {};
 	}
-	ALLEGRO_FILE *tabFile = al_fopen(tabFileName.c_str(), "r");
+	std::ifstream tabFile (tabFileName, std::ios_base::in);
 	if (!tabFile)
 	{
 		std::cerr << "Failed to open \"" << tabFileName << "\"\n";
@@ -32,14 +32,14 @@ VoxelLayer::loadLayersFromFile(const std::string datFileName, const std::string 
 	std::vector<VoxelLayer> layers;
 
 	uint32_t offset;
-	int ret = al_fread(tabFile, &offset, sizeof(offset));
-	while (ret == sizeof(offset))
+	tabFile.read((char*)&offset, sizeof(offset));
+	while (tabFile)
 	{
-		al_fseek(datFile, offset*4, ALLEGRO_SEEK_SET);
+		datFile.seekg(offset*4, std::ios_base::beg);
 		VoxelLayer layer;
 		struct lofheader header;
-		ret = al_fread(datFile, &header, sizeof(header));
-		if (ret != sizeof(header))
+		datFile.read((char*)&header, sizeof(header));
+		if (!datFile)
 		{
 			std::cerr << "Failed to load LOF bitmap\n";
 			return {};
@@ -54,14 +54,14 @@ VoxelLayer::loadLayersFromFile(const std::string datFileName, const std::string 
 		layer.bitsY = header.bitsY;
 		layer.bitsX = header.bitsX;
 		layer.bitmap.resize(layer.bitsY);
-		for (int y = 0; y < header.bitsY ; y++)
+		for (unsigned int y = 0; y < header.bitsY ; y++)
 		{
 			layer.bitmap[y].resize(layer.bitsX);
-			for (int x = 0; x < header.bitsX / 8; x++)
+			for (unsigned int x = 0; x < header.bitsX / 8; x++)
 			{
 				uint8_t byte;
-				ret = al_fread(datFile, &byte, sizeof(byte));
-				if (ret != sizeof(byte))
+				datFile.read((char*)&byte, sizeof(byte));
+				if (!datFile)
 				{
 					std::cerr << "EOF in LOF bitmap\n";
 					return {};
@@ -75,12 +75,10 @@ VoxelLayer::loadLayersFromFile(const std::string datFileName, const std::string 
 			}
 		}
 		layers.push_back(layer);
-		ret = al_fread(tabFile, &offset, sizeof(offset));
+		tabFile.read((char*)&offset, sizeof(offset));
 	}
 	std::cout << "Loaded " << layers.size() << " LOF layers\n";
 
-	al_fclose(tabFile);
-	al_fclose(datFile);
 	return layers;
 }
 

@@ -1,8 +1,9 @@
-#include "building.h"
 #include "organisation.h"
+#include "building.h"
 
 #include <cstdint>
 #include <iostream>
+#include <cassert>
 
 namespace ApocRes {
 
@@ -244,13 +245,13 @@ static_assert(sizeof(bld_file) == 226, "bld_file not 226 bytes");
 
 Building*
 Building::loadFromFile(int id,
-	ALLEGRO_FILE *file,
+	std::ifstream &file,
 	std::vector<Organisation> &organisations,
 	std::vector<std::string> &names)
 {
 	struct bld_file bld;
-	int ret = al_fread(file, &bld, sizeof(bld));
-	if (ret != sizeof(bld))
+	file.read((char*)&bld, sizeof(bld));
+	if (!file)
 		return nullptr;
 	auto name = names[bld.nameIdx];
 	auto owner = organisations[bld.ownerIdx];
