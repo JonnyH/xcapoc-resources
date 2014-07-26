@@ -15,6 +15,8 @@ set (APOCLIB_SOURCE_FILES
 	apoclib/rect2d.h
 	apoclib/voxel_layer.cpp
 	apoclib/voxel_layer.h
+	apoclib/citymap.cpp
+	apoclib/citymap.h
 )
 
 find_package(PkgConfig)
@@ -34,3 +36,6 @@ target_link_libraries(load_buildings apoclib)
 
 add_executable(load_citytiles load_citytiles.cpp)
 target_link_libraries(load_citytiles apoclib)
+
+add_executable(load_citymap load_citymap.cpp)
+target_link_libraries(load_citymap apoclib)
