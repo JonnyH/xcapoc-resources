@@ -14,7 +14,9 @@ namespace ApocRes {
 class CityMapTile {
 private:
 public:
-	std::string imageName;
+	std::string dayImageName;
+	std::string twilightImageName;
+	std::string nightImageName;
 	bool ground;
 	bool connectionX0;
 	bool connectionX1;

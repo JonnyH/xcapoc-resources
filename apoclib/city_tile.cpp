@@ -40,9 +40,17 @@ CityMapTile::loadFromFile(std::ifstream &file, int id, std::vector<VoxelLayer> &
 	CityMapTile *tile = new CityMapTile();
 	std::stringstream ss;
 
-	ss << "ufodata/city:" << id;
+	ss << "city:01:" << id;
+	tile->dayImageName = ss.str();
+	ss.str("");
+	ss.clear();
+	ss << "city:02:" << id;
+	tile->twilightImageName = ss.str();
+	ss.str("");
+	ss.clear();
+	ss << "city:03:" << id;
+	tile->nightImageName = ss.str();
 
-	tile->imageName = ss.str();
 	for (int i = 0; i < 16; i++)
 		tile->lofVoxels.push_back(lofVoxelLayers[dat.voxelIdx[i]]);
 	tile->ground = dat.ground;
@@ -61,7 +69,9 @@ CityMapTile::WriteXML(tinyxml2::XMLElement *parent)
 	tinyxml2::XMLElement *element = parent->GetDocument()->NewElement("maptile");
 	parent->InsertEndChild(element);
 
-	element->SetAttribute("tile", this->imageName.c_str());
+	element->SetAttribute("dayTile", this->dayImageName.c_str());
+	element->SetAttribute("twilightTile", this->twilightImageName.c_str());
+	element->SetAttribute("nightTile", this->nightImageName.c_str());
 	element->SetAttribute("ground", this->ground);
 	element->SetAttribute("connectionx0", this->connectionX0);
 	element->SetAttribute("connectionx1", this->connectionX1);

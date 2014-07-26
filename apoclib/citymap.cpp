@@ -38,7 +38,7 @@ CityMap::WriteXML(tinyxml2::XMLElement *parent)
 				auto tileElement = parent->GetDocument()->NewElement("tile");
 				cityElement->InsertEndChild(tileElement);
 				std::stringstream ss;
-				ss << "citymap:" << tileID;
+				ss << "city/citymap:" << tileID;
 				tileElement->SetAttribute("x", x);
 				tileElement->SetAttribute("y", y);
 				tileElement->SetAttribute("z", z);
