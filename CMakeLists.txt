@@ -31,3 +31,6 @@ target_link_libraries(apoclib ${PC_TINYXML2_LIBRARIES})
 
 add_executable(load_buildings load_buildings.cpp)
 target_link_libraries(load_buildings apoclib)
+
+add_executable(load_citytiles load_citytiles.cpp)
+target_link_libraries(load_citytiles apoclib)
