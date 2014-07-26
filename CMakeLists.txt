@@ -17,19 +17,31 @@ set (APOCLIB_SOURCE_FILES
 	apoclib/voxel_layer.h
 	apoclib/citymap.cpp
 	apoclib/citymap.h
+	apoclib/palette.cpp
+	apoclib/palette.h
+	apoclib/palette_image.cpp
+	apoclib/palette_image.h
+	apoclib/pck.cpp
+	apoclib/pck.h
 )
 
 find_package(PkgConfig)
 
 pkg_check_modules(PC_TINYXML2 REQUIRED tinyxml2)
+pkg_check_modules(PC_LIBPNG REQUIRED libpng)
 
 find_path(TINYXML2_INCLUDE_DIR tinyxml2.h
 	HINTS ${PC_TINYXML2_INCLUDEDIR})
 
+find_path(PNGPP_INCLUDE_DIR png++/png.hpp)
+
 include_directories(${TINYXML2_INCLUDE_DIR})
+include_directories(${PNGPP_INCLUDE_DIR})
+
 add_library(apoclib ${APOCLIB_SOURCE_FILES})
 
 target_link_libraries(apoclib ${PC_TINYXML2_LIBRARIES})
+target_link_libraries(apoclib ${PC_LIBPNG_LIBRARIES})
 
 add_executable(load_buildings load_buildings.cpp)
 target_link_libraries(load_buildings apoclib)
@@ -39,3 +51,6 @@ target_link_libraries(load_citytiles apoclib)
 
 add_executable(load_citymap load_citymap.cpp)
 target_link_libraries(load_citymap apoclib)
+
+add_executable(load_cityimages load_cityimages.cpp)
+target_link_libraries(load_cityimages apoclib)
