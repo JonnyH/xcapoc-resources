@@ -238,7 +238,7 @@ struct bld_file
 	uint16_t unknown10;
 	uint16_t zeros5[10];
 
-} __attribute__((packed));
+};
 
 static_assert(sizeof(bld_file) == 226, "bld_file not 226 bytes");
 

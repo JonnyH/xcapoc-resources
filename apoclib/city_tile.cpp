@@ -26,7 +26,7 @@ struct citymap_dat_file
 	uint8_t connectionZ1;
 	uint8_t unknown9[13];
 
-} __attribute__((packed));
+};
 
 static_assert(sizeof(struct citymap_dat_file) == 52, "citymap_dat_file not 52 bytes");
 

@@ -1,4 +1,5 @@
 #include "palette.h"
+#include <cstdint>
 
 namespace ApocRes {
 

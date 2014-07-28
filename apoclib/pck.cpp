@@ -17,18 +17,19 @@ struct pck_header
 	uint16_t rightClip;
 	uint16_t topClip;
 	uint16_t bottomClip;
-} __attribute__((packed));
+};
 
 static_assert(sizeof(struct pck_header) == 12, "pck_header not 12 bytes");
 
+#pragma pack(push,1)
 struct pck_rle_header
 {
 	uint32_t pixelSkip;
 	uint8_t columnSkip;
 	uint16_t pixelCount;
 	uint8_t padding;
-} __attribute__((packed));
-
+};
+#pragma pack(pop)
 static_assert(sizeof(struct pck_rle_header) == 8, "pck_rle_header not 8 bytes");
 
 static PaletteImage

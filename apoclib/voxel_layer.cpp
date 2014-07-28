@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdint>
 
 #include "voxel_layer.h"
 
@@ -9,7 +10,7 @@ struct lofheader
 {
 	uint32_t bitsX;
 	uint32_t bitsY;
-} __attribute__((packed));
+};
 
 static_assert(sizeof(struct lofheader) == 8, "lofheader not 8 bytes");
 

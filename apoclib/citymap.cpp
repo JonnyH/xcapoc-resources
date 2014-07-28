@@ -1,5 +1,6 @@
 #include "citymap.h"
 #include <sstream>
+#include <cstdint>
 
 namespace ApocRes {
 
