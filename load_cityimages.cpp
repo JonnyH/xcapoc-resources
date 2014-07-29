@@ -13,6 +13,8 @@ static void print_usage()
 
 int main(int argc, char **argv)
 {
+	int maxX = 0;
+	int maxY = 0;
 	if (argc != 5)
 	{
 		print_usage();
@@ -47,10 +49,16 @@ int main(int argc, char **argv)
 	for (unsigned int i = 0; i < pck->images.size(); i++)
 	{
 		auto &image = pck->images[i];
+		if (image.sizeX > maxX)
+			maxX = image.sizeX;
+		if (image.sizeY > maxY)
+			maxY = image.sizeY;
 		std::stringstream ss;
 		ss << argv[4] << "/" << i << ".png";
 		auto pngImage = image.getPNG(*pal);
 		pngImage.write(ss.str());
 	}
+
+	std::cout << "Max X:" << maxX << "\nMax Y:" << maxY << "\n";
 
 }

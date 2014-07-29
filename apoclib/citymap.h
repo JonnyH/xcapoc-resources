@@ -10,10 +10,10 @@ class CityMap
 {
 	private:
 		CityMap(std::string name, int x = 100, int y = 100, int z = 10);
+	public:
 		std::vector<std::vector<std::vector<int> > > tiles; //[x][y][z]
 		std::string name;
 		int sizeX, sizeY, sizeZ;
-	public:
 		static CityMap *loadFromFile(std::ifstream &file, std::string name);
 
 	void WriteXML(tinyxml2::XMLElement *parent);

@@ -29,6 +29,8 @@ find_package(PkgConfig)
 
 pkg_check_modules(PC_TINYXML2 REQUIRED tinyxml2)
 pkg_check_modules(PC_LIBPNG REQUIRED libpng)
+pkg_check_modules(PC_SDL2 REQUIRED sdl2)
+pkg_check_modules(PC_GLES2 REQUIRED glesv2)
 
 find_path(TINYXML2_INCLUDE_DIR tinyxml2.h
 	HINTS ${PC_TINYXML2_INCLUDEDIR})
@@ -54,3 +56,14 @@ target_link_libraries(load_citymap apoclib)
 
 add_executable(load_cityimages load_cityimages.cpp)
 target_link_libraries(load_cityimages apoclib)
+
+add_library(renderlib render/citymap_render.cpp
+		render/citymap_render_gles2.cpp)
+target_link_libraries(renderlib apoclib)
+target_link_libraries(renderlib ${PC_SDL2_LIBRARIES})
+target_link_libraries(renderlib ${PC_GLES2_LIBRARIES})
+
+add_executable(citymap_render_test citymap_render_test.cpp)
+target_link_libraries(citymap_render_test apoclib)
+target_link_libraries(citymap_render_test renderlib)
+target_link_libraries(citymap_render_test ${PC_SDL2_LIBRARIES})
