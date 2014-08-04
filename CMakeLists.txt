@@ -57,8 +57,7 @@ target_link_libraries(load_citymap apoclib)
 add_executable(load_cityimages load_cityimages.cpp)
 target_link_libraries(load_cityimages apoclib)
 
-add_library(renderlib render/citymap_render.cpp
-		render/citymap_render_gles2.cpp)
+add_library(renderlib render/citymap_render.cpp)
 target_link_libraries(renderlib apoclib)
 target_link_libraries(renderlib ${PC_SDL2_LIBRARIES})
 target_link_libraries(renderlib ${PC_GLES2_LIBRARIES})
@@ -67,3 +66,6 @@ add_executable(citymap_render_test citymap_render_test.cpp)
 target_link_libraries(citymap_render_test apoclib)
 target_link_libraries(citymap_render_test renderlib)
 target_link_libraries(citymap_render_test ${PC_SDL2_LIBRARIES})
+
+add_executable(png2pal png2pal.c)
+target_link_libraries(png2pal ${PC_LIBPNG_LIBRARIES})
