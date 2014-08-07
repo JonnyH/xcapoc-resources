@@ -67,5 +67,7 @@ target_link_libraries(citymap_render_test apoclib)
 target_link_libraries(citymap_render_test renderlib)
 target_link_libraries(citymap_render_test ${PC_SDL2_LIBRARIES})
 
+add_executable(bin2h bin2h.cpp)
+
 add_executable(png2pal png2pal.c)
 target_link_libraries(png2pal ${PC_LIBPNG_LIBRARIES})
