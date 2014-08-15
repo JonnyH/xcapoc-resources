@@ -79,12 +79,7 @@ loadRLEImageA(struct pck_header &header, std::ifstream &file)
 	{
 		struct pck_rle_header_a rleHeader;
 		file.read((char*)&rleHeader, sizeof(rleHeader));
-		if (file.eof())
-		{
-			std::cerr << "Unexpected EOF reading PCK RLE header - maybe RLE type B?\n";
-			break;
-		}
-		if (rleHeader.pixelSkip == 0xFFFFFFFF)
+		if (rleHeader.pixelSkip == 0xFFFFFFFF || file.eof())
 			break;
 
 		unsigned int row = rleHeader.pixelSkip / 640;
