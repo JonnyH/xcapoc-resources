@@ -59,4 +59,7 @@ target_link_libraries(load_cityimages apoclib)
 add_executable(bin2h bin2h.cpp)
 
 add_executable(png2pal png2pal.c)
+
 target_link_libraries(png2pal ${PC_LIBPNG_LIBRARIES})
+
+add_executable(split_tab split_tab.cpp tabfile.cpp)
