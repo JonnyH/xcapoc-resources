@@ -2,6 +2,7 @@
 #include <cassert>
 #include "palette_image.h"
 #include <cstdint>
+#include <map>
 
 namespace {
 #include "xcom_blk.h"
@@ -229,17 +230,116 @@ loadFromFile1(PCK *pck, std::ifstream &pckFile, std::ifstream &tabFile, PCK::RLE
 	return pck;
 }
 
+#pragma pack(push,1)
+struct pck128_header
+{
+	uint8_t h1;
+	uint8_t h2;
+	uint16_t unknown1;
+	uint16_t width;
+	uint16_t height;
+};
+#pragma pack(pop)
+static_assert(sizeof(struct pck128_header) == 8, "pck_header not 8 bytes");
+
+//244 is the closest-to-black I could find
+#define B 244
+
+std::vector<std::vector<int>> ditherLut =
+{
+	{0, 0, 0, 0},
+	{B, 0, B, 0},
+	{0, B, 0, B},
+	{B, 0, 0, 0},
+	{0, B, 0, 0},
+	{0, 0, B, 0},
+	{0, 0, 0, B},
+};
+#undef B
+
+static PCK*
+loadFromFile128(PCK *pck, std::ifstream &pckFile, std::ifstream &tabFile)
+{
+	uint32_t offset;
+	tabFile.read((char*)&offset, sizeof(offset));
+	while (tabFile)
+	{
+		pckFile.seekg(offset, std::ios::beg);
+		struct pck128_header header;
+
+
+		pckFile.read((char*)&header, sizeof(header));
+		assert(header.unknown1 == 0);
+		PaletteImage img(header.width, header.height);
+
+		uint8_t b = 0;
+		pckFile.read((char*)&b, 1);
+
+
+		int pos = 0;
+		while (b != 0xff)
+		{
+			uint8_t count = b;
+			count = count & 0x7f;
+			pckFile.read((char*)&b, 1);
+			uint8_t idx = b;
+
+			if (idx == 0)
+				pos += count * 4;
+			else
+			{
+
+				while (count--)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						#define STRIDE 128
+						int x = pos % STRIDE;
+						int y = pos / STRIDE;
+						if (x < header.width && y < header.height)
+						{
+							img.setPixel(x, y, ditherLut[idx][i]);
+						}
+						pos++;
+					}
+				}
+			}
+			pckFile.read((char*)&b, 1);
+		}
+
+
+		pck->images.push_back(img);
+
+
+		tabFile.read((char*)&offset, sizeof(offset));
+	}
+
+	return pck;
+}
+
 
 PCK *
 PCK::loadFromFile(std::ifstream &pckFile, std::ifstream &tabFile, RLEType rleType)
 {
 	PCK *pck = new PCK();
-	uint16_t version;
-	pckFile.read((char*)&version, sizeof(version));
-	switch (version)
+	uint8_t version[2];
+	pckFile.read((char*)&version[0], 2);
+	switch (version[0])
 	{
-		case 1:
-			return loadFromFile1(pck, pckFile, tabFile, rleType);
+		case 0:
+			switch (version[1]) {
+				case 1:
+					return loadFromFile1(pck, pckFile, tabFile, rleType);
+				case 2:
+				case 3:
+				case 0:
+					assert(0);
+					break;
+				default:
+					return loadFromFile128(pck, pckFile, tabFile);
+			}
+		case 128:
+			return loadFromFile128(pck, pckFile, tabFile);
 		default:
 			assert(0);
 	}
