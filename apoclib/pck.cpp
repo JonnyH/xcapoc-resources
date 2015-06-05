@@ -280,7 +280,6 @@ loadFromFile128(PCK *pck, std::ifstream &pckFile, std::ifstream &tabFile)
 		while (b != 0xff)
 		{
 			uint8_t count = b;
-			count = count & 0x7f;
 			pckFile.read((char*)&b, 1);
 			uint8_t idx = b;
 
@@ -293,7 +292,7 @@ loadFromFile128(PCK *pck, std::ifstream &pckFile, std::ifstream &tabFile)
 				{
 					for (int i = 0; i < 4; i++)
 					{
-						#define STRIDE 128
+						#define STRIDE 640
 						int x = pos % STRIDE;
 						int y = pos / STRIDE;
 						if (x < header.width && y < header.height)
