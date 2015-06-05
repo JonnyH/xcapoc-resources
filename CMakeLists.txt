@@ -71,8 +71,8 @@ target_link_libraries(load_citytiles apoclib)
 add_executable(load_citymap load_citymap.cpp)
 target_link_libraries(load_citymap apoclib)
 
-add_executable(load_cityimages load_cityimages.cpp)
-target_link_libraries(load_cityimages apoclib)
+add_executable(pck2png pck2png.cpp)
+target_link_libraries(pck2png apoclib)
 
 add_executable(bin2h bin2h.cpp)
 

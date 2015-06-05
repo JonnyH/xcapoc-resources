@@ -10,11 +10,6 @@ namespace {
 
 namespace ApocRes {
 
-
-PCK::PCK()
-{
-}
-
 struct pck_header
 {
 	uint16_t compressionMode;
@@ -56,10 +51,9 @@ struct pck_blk_header
 	uint8_t rowRecords;
 	uint16_t unknown;
 	uint8_t row;
-	uint8_t subRecords;
 };
 #pragma pack(pop)
-static_assert(sizeof(struct pck_blk_header) == 5, "pck_blk_header not 5 bytes");
+static_assert(sizeof(struct pck_blk_header) == 4, "pck_blk_header not 4 bytes");
 
 #pragma pack(push,1)
 struct pck_blk_subheader
@@ -72,8 +66,20 @@ struct pck_blk_subheader
 static_assert(sizeof(struct pck_blk_subheader) == 5, "pck_blk_subheader not 5 bytes");
 
 static PaletteImage
-loadRLEImageA(struct pck_header &header, std::ifstream &file)
+loadRLEA(std::istream &file)
 {
+	struct pck_header header;
+	file.read((char*)&header, sizeof(header));
+	if (!file)
+	{
+		std::cerr << "Unexpected EOF reading RLE PCK header\n";
+		assert(0);
+	}
+	if (header.compressionMode != 1)
+	{
+		std::cerr << "RLE header expected compression mode '1', got '" << (int)header.compressionMode << "'\n";
+		assert(0);
+	}
 	PaletteImage img(header.rightClip, header.bottomClip);
 
 	while (file)
@@ -109,8 +115,20 @@ loadRLEImageA(struct pck_header &header, std::ifstream &file)
 }
 
 static PaletteImage
-loadRLEImageB(struct pck_header &header, std::ifstream &file)
+loadRLEB(std::istream &file)
 {
+	struct pck_header header;
+	file.read((char*)&header, sizeof(header));
+	if (!file)
+	{
+		std::cerr << "Unexpected EOF reading RLE PCK header\n";
+		assert(0);
+	}
+	if (header.compressionMode != 1)
+	{
+		std::cerr << "RLE header expected compression mode '1', got '" << (int)header.compressionMode << "'\n";
+		assert(0);
+	}
 	PaletteImage img(header.rightClip, header.bottomClip);
 
 	while (file)
@@ -151,8 +169,21 @@ loadRLEImageB(struct pck_header &header, std::ifstream &file)
 }
 
 static PaletteImage
-loadBLKImage(struct pck_header &header, std::ifstream &file)
+loadBLK(std::istream &file)
 {
+	struct pck_header header;
+	file.read((char*)&header, sizeof(header));
+	if (!file)
+	{
+		std::cerr << "Unexpected EOF reading BLK PCK header\n";
+		assert(0);
+	}
+	if (header.compressionMode != 3)
+	{
+		std::cerr << "BLK header expected compression mode '3', got '" << (int)header.compressionMode << "'\n";
+		assert(0);
+	}
+
 	PaletteImage img(header.rightClip, header.bottomClip);
 	while (file)
 	{
@@ -167,7 +198,7 @@ loadBLKImage(struct pck_header &header, std::ifstream &file)
 		    blkHeader.unknown == 0xffff &&
 			blkHeader.row == 0xff)
 			break;
-		for (unsigned r = 0; r < blkHeader.subRecords; r++)
+		for (unsigned r = 0; r < blkHeader.rowRecords; r++)
 		{
 			struct pck_blk_subheader subHeader;
 			file.read((char*)&subHeader, sizeof(subHeader));
@@ -188,46 +219,6 @@ loadBLKImage(struct pck_header &header, std::ifstream &file)
 		}
 	}
 	return img;
-}
-
-static PCK*
-loadFromFile1(PCK *pck, std::ifstream &pckFile, std::ifstream &tabFile, PCK::RLEType type)
-{
-	uint32_t offset;
-
-	tabFile.read((char*)&offset, sizeof(offset));
-
-	while (tabFile)
-	{
-		pckFile.seekg(offset*4, std::ios::beg);
-		struct pck_header header;
-
-		pckFile.read((char*)&header, sizeof(header));
-
-		switch (header.compressionMode)
-		{
-			case 1:
-				switch (type)
-				{
-					case PCK::RLEType::typeA:
-						pck->images.push_back(loadRLEImageA(header, pckFile));
-						break;
-					case PCK::RLEType::typeB:
-						pck->images.push_back(loadRLEImageB(header, pckFile));
-						break;
-				}
-				break;
-			case 3:
-				pck->images.push_back(loadBLKImage(header, pckFile));
-				break;
-			default:
-				std::cerr << "Unknown compression mode:" << header.compressionMode << "\n";
-				assert(0);
-		}
-		tabFile.read((char*)&offset, sizeof(offset));
-	}
-
-	return pck;
 }
 
 #pragma pack(push,1)
@@ -257,92 +248,81 @@ std::vector<std::vector<int>> ditherLut =
 };
 #undef B
 
-static PCK*
-loadFromFile128(PCK *pck, std::ifstream &pckFile, std::ifstream &tabFile)
+static PaletteImage
+loadShadow(std::istream &file)
 {
-	uint32_t offset;
-	tabFile.read((char*)&offset, sizeof(offset));
-	while (tabFile)
+	struct pck128_header header;
+	file.read((char*)&header, sizeof(header));
+	if (!file)
 	{
-		pckFile.seekg(offset, std::ios::beg);
-		struct pck128_header header;
-
-
-		pckFile.read((char*)&header, sizeof(header));
-		assert(header.unknown1 == 0);
-		PaletteImage img(header.width, header.height);
-
-		uint8_t b = 0;
-		pckFile.read((char*)&b, 1);
-
-
-		int pos = 0;
-		while (b != 0xff)
+		std::cerr << "Unexpected EOF reading BLK PCK header\n";
+		assert(0);
+	}
+	PaletteImage img(header.width, header.height);
+	uint8_t b = 0;
+	file.read((char*)&b, 1);
+	int pos = 0;
+	while (b != 0xff)
+	{
+		uint8_t count = b;
+		file.read((char*)&b, 1);
+		if (!file)
 		{
-			uint8_t count = b;
-			pckFile.read((char*)&b, 1);
-			uint8_t idx = b;
+			std::cerr << "Unexpected EOF reading shadow data\n";
+			assert(0);
+			break;
+		}
+		uint8_t idx = b;
 
-			if (idx == 0)
-				pos += count * 4;
-			else
+		if (idx == 0)
+			pos += count * 4;
+		else
+		{
+			assert(idx < 7);
+
+			while (count--)
 			{
-
-				while (count--)
+				for (int i = 0; i < 4; i++)
 				{
-					for (int i = 0; i < 4; i++)
+					#define STRIDE 640
+					int x = pos % STRIDE;
+					int y = pos / STRIDE;
+					if (x < header.width && y < header.height)
 					{
-						#define STRIDE 640
-						int x = pos % STRIDE;
-						int y = pos / STRIDE;
-						if (x < header.width && y < header.height)
-						{
-							img.setPixel(x, y, ditherLut[idx][i]);
-						}
-						pos++;
+						img.setPixel(x, y, ditherLut[idx][i]);
 					}
+					pos++;
 				}
 			}
-			pckFile.read((char*)&b, 1);
 		}
-
-
-		pck->images.push_back(img);
-
-
-		tabFile.read((char*)&offset, sizeof(offset));
+		file.read((char*)&b, 1);
+		if (!file)
+		{
+			std::cerr << "Unexpected EOF reading shadow data\n";
+			assert(0);
+			break;
+		}
 	}
-
-	return pck;
+	return img;
 }
 
-
-PCK *
-PCK::loadFromFile(std::ifstream &pckFile, std::ifstream &tabFile, RLEType rleType)
+PaletteImage
+PCK::load(std::istream &pckFile, PCKType type)
 {
-	PCK *pck = new PCK();
-	uint8_t version[2];
-	pckFile.read((char*)&version[0], 2);
-	switch (version[0])
+	switch (type)
 	{
-		case 0:
-			switch (version[1]) {
-				case 1:
-					return loadFromFile1(pck, pckFile, tabFile, rleType);
-				case 2:
-				case 3:
-				case 0:
-					assert(0);
-					break;
-				default:
-					return loadFromFile128(pck, pckFile, tabFile);
-			}
-		case 128:
-			return loadFromFile128(pck, pckFile, tabFile);
+		case PCKType::RLEA:
+			return loadRLEA(pckFile);
+		case PCKType::RLEB:
+			return loadRLEB(pckFile);
+		case PCKType::BLK:
+			return loadBLK(pckFile);
+		case PCKType::SHADOW:
+			return loadShadow(pckFile);
 		default:
+			std::cerr << "Unexpected PCKType\n";
 			assert(0);
 	}
-	return pck;
 }
 
 }; //namespace ApocRes
