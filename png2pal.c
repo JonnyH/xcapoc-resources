@@ -92,16 +92,22 @@ int main(int argc, char **argv)
 		unsigned char b = 0;
 		b = pal[x].red;
 #ifdef VGA_RANGE
+	if (b%4)
+		fprintf(stderr, "idx %d: R value %d isn't 6-bit?\n", x, (int)b);
 		b /= 4;
 #endif
 		fwrite(&b, 1, 1, pal_out);
 		b = pal[x].green;
 #ifdef VGA_RANGE
+	if (b%4)
+		fprintf(stderr, "idx %d: G value %d isn't 6-bit?\n", x, (int)b);
 		b /= 4;
 #endif
 		fwrite(&b, 1, 1, pal_out);
 		b = pal[x].blue;
 #ifdef VGA_RANGE
+	if (b%4)
+		fprintf(stderr, "idx %d: B value %d isn't 6-bit?\n", x, (int)b);
 		b /= 4;
 #endif
 		fwrite(&b, 1, 1, pal_out);

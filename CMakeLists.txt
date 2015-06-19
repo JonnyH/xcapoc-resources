@@ -79,6 +79,8 @@ add_executable(bin2h bin2h.cpp)
 add_executable(png2pal png2pal.c)
 target_link_libraries(png2pal ${LIBPNG_LIBRARY})
 
+add_executable(pcx2pal pcx2pal.c)
+
 add_executable(font2png font2png.cpp)
 target_link_libraries(font2png apoclib)
 
