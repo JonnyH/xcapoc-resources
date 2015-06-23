@@ -9,6 +9,9 @@
 #include <cstring>
 #include <png++/png.hpp>
 
+//#define LSBFIRST
+
+
 struct lof_header
 {
 	uint32_t width;
@@ -55,11 +58,19 @@ int main(int argc, char **argv)
 				for (int bit = 0; bit < 32; bit++)
 				{
 					png::rgba_pixel pix;
+#ifdef LSBFIRST
 					if (bitmask & 0x1)
 						pix = png::rgba_pixel(255,255,255,255);
 					else
 						pix = png::rgba_pixel(255,0,0,255);
 					bitmask >>= 1;
+#else
+					if (bitmask & 0x80000000)
+						pix = png::rgba_pixel(255,255,255,255);
+					else
+						pix = png::rgba_pixel(255,0,0,255);
+					bitmask <<= 1;
+#endif
 					image[y][x+bit] = pix;
 				}
 			}
