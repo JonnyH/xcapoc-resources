@@ -81,6 +81,9 @@ target_link_libraries(png2pal ${LIBPNG_LIBRARY})
 
 add_executable(pcx2pal pcx2pal.c)
 
+add_executable(lof2png lof2png.cpp)
+target_link_libraries(lof2png ${LIBPNG_LIBRARY})
+
 add_executable(font2png font2png.cpp)
 target_link_libraries(font2png apoclib)
 
