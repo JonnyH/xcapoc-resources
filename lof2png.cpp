@@ -47,9 +47,10 @@ int main(int argc, char **argv)
 		assert(lofFile);
 		png::image<png::rgba_pixel> image(header.width, header.height);
 		std::cerr << "Reading idx " << idx << " " << header.width << " x " << header.height << "\n";
-		assert(header.width % 32 == 0);
+		assert(header.width % 8 == 0);
 		for (int y = 0; y < header.height; y++)
 		{
+			//Lines are always aligned to 4 byte boundaries
 			for (int x = 0; x < header.width; x+= 32)
 			{
 				uint32_t bitmask;
@@ -57,6 +58,8 @@ int main(int argc, char **argv)
 				assert(lofFile);
 				for (int bit = 0; bit < 32; bit++)
 				{
+					if (x + bit >= header.width)
+						break;
 					png::rgba_pixel pix;
 #ifdef LSBFIRST
 					if (bitmask & 0x1)
