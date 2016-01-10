@@ -1,5 +1,6 @@
 #include "palette.h"
 #include <cstdint>
+#include <memory>
 
 namespace ApocRes {
 
@@ -16,13 +17,21 @@ Palette::getPixel(unsigned int idx) const
 	return this->pixels[idx];
 }
 
-Palette*
-Palette::loadFromFile(std::ifstream &file)
+void
+Palette::setPixel(unsigned int idx, png::rgba_pixel pix)
 {
-	file.seekg(0, std::ios::end);
-	unsigned int entries = file.tellg()/3;
-	file.seekg(0, std::ios::beg);
+	if (idx >= this->pixels.size())
+		return;
+	this->pixels[idx] = pix;
+}
+
+Palette*
+Palette::loadFromMemory(const char *data, unsigned int length, bool expandVGA)
+{
+	unsigned int entries = length / 3;
 	Palette *p = new Palette(entries);
+
+	const char *pos = data;
 
 	for (unsigned int i = 0; i < entries; i++)
 	{
@@ -32,16 +41,30 @@ Palette::loadFromFile(std::ifstream &file)
 			a = 0;
 		else
 			a = 255;
-		file.read((char*)&r, 1);
-		r <<= 2;
-		file.read((char*)&g, 1);
-		g <<= 2;
-		file.read((char*)&b, 1);
-		b <<= 2;
+		r = *pos++;
+		g = *pos++;
+		b = *pos++;
+		if (expandVGA)
+		{
+			r <<= 2;
+			g <<= 2;
+			b <<= 2;
+		}
 		p->pixels[i] = png::rgba_pixel(r,g,b,a);
 	}
 
 	return p;
+}
+
+Palette*
+Palette::loadFromFile(std::ifstream &file, bool expandVGA)
+{
+	file.seekg(0, std::ios::end);
+	auto size = file.tellg();
+	file.seekg(0, std::ios::beg);
+	std::unique_ptr<char[]> data(new char[size]);
+	file.read((char*)data.get(), size);
+	return Palette::loadFromMemory(data.get(), size, expandVGA);
 }
 
 }; //namespace ApocRes
