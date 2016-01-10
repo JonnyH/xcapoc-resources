@@ -87,5 +87,7 @@ target_link_libraries(lof2png ${LIBPNG_LIBRARY})
 add_executable(font2png font2png.cpp)
 target_link_libraries(font2png apoclib)
 
+add_executable(pcx2png pcx2png.cpp)
+target_link_libraries(pcx2png apoclib)
 
 add_executable(split_tab split_tab.cpp tabfile.cpp)
